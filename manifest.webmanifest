@@ -1,0 +1,11 @@
+{
+  "name": "Tuition Fee Manager",
+  "short_name": "Tuition Fee",
+  "description": "Student tuition fee and SMS reminder manager",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#315ee8",
+  "icons": [{"src": "/static/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}

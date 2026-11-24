@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — Tuition Fee Manager{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">OVERVIEW</p><h1>Dashboard</h1><p class="muted">শিক্ষার্থীদের বেতন ও মাসিক সংগ্রহের হিসাব</p></div><a class="btn primary" href="{{ url_for('scan') }}">＋ ID Scan & Payment</a></div>
+<form class="filter-bar" method="get"><label>যে মাসের হিসাব দেখবে <input type="month" name="month" value="{{ fee_month }}"></label><button class="btn secondary">Apply</button></form>
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-label">Active Students</div><div class="stat-value">{{ total }}</div><div class="stat-note">মোট সক্রিয় শিক্ষার্থী</div></div>
+  <div class="stat-card green"><div class="stat-label">Paid Students</div><div class="stat-value">{{ paid }}</div><div class="stat-note">{{ pretty_month(fee_month) }}-এ বেতন দিয়েছে</div></div>
+  <div class="stat-card orange"><div class="stat-label">Unpaid Students</div><div class="stat-value">{{ unpaid_count }}</div><div class="stat-note">এখনো বেতন বাকি</div></div>
+  <div class="stat-card blue"><div class="stat-label">Collection</div><div class="stat-value">৳{{ '{:,.0f}'.format(amount) }}</div><div class="stat-note">{{ pretty_month(fee_month) }}-এর মোট সংগ্রহ</div></div>
+</div>
+<div class="two-col">
+  <section class="panel"><div class="panel-head"><div><h2>Unpaid Students</h2><p class="muted">এই মাসে যাদের পেমেন্ট রেকর্ড নেই</p></div><a href="{{ url_for('reports', month=fee_month) }}" class="text-link">সব দেখুন →</a></div>
+  {% if unpaid %}<div class="table-wrap"><table><thead><tr><th>Student</th><th>Phone</th><th>Fee</th></tr></thead><tbody>{% for s in unpaid %}<tr><td><strong>{{ s.name }}</strong><small>{{ s.student_id }}</small></td><td>{{ s.phone }}</td><td>৳{{ '{:,.0f}'.format(s.monthly_fee) }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty">এই মাসে সবার পেমেন্ট সম্পন্ন হয়েছে।</div>{% endif %}
+  </section>
+  <section class="panel"><div class="panel-head"><div><h2>Recent Payments</h2><p class="muted">{{ pretty_month(fee_month) }}</p></div><span class="pill success">{{ paid }} Paid</span></div>
+  {% if recent %}<div class="table-wrap"><table><thead><tr><th>Student</th><th>Amount</th><th>Paid at</th></tr></thead><tbody>{% for p in recent %}<tr><td><strong>{{ p.name }}</strong><small>{{ p.student_id }}</small></td><td>৳{{ '{:,.0f}'.format(p.amount) }}</td><td>{{ p.paid_at[11:16] }}<small>{{ p.paid_at[:10] }}</small></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty">এখনো কোনো পেমেন্ট রেকর্ড নেই।</div>{% endif %}
+  </section>
+</div>
+<section class="reminder-strip"><div class="reminder-icon">✉</div><div><strong>১৫ তারিখের Automatic Reminder</strong><p>এই মাসে {{ reminders }} জনকে Reminder SMS সফলভাবে পাঠানো হয়েছে। সফটওয়্যার চালু ও SMS Gateway configured থাকতে হবে।</p></div><a class="text-link" href="{{ url_for('settings') }}">SMS সেটিংস →</a></section>
+<div class="quick-links"><a href="{{ url_for('student_new') }}">＋ নতুন শিক্ষার্থী যোগ</a><a href="{{ url_for('import_students') }}">⇧ CSV দিয়ে ১০০ জন Import</a><a href="{{ url_for('backup') }}">↓ Database Backup</a></div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Admin Login — Tuition Fee Manager{% endblock %}
+{% block content %}
+<section class="panel login-panel">
+  <p class="eyebrow">ADMIN ACCESS</p><h1>Tuition Fee Manager</h1>
+  {% if setup_missing %}<p class="muted">সার্ভারে ADMIN_PASSWORD সেট না করা পর্যন্ত লগইন সম্ভব নয়।</p>{% else %}
+  <p class="muted">শিক্ষার্থীদের তথ্য দেখতে Admin Password দাও।</p>
+  <form method="post" class="form-grid one-col" style="margin-top:18px">
+    <label>Admin Password<input type="password" name="password" autocomplete="current-password" required autofocus></label>
+    <button class="btn primary" type="submit">Login</button>
+  </form>{% endif %}
+</section>
+{% endblock %}
