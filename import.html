@@ -1,6 +1,0 @@
-{% extends 'base.html' %}
-{% block title %}Import Students — Tuition Fee Manager{% endblock %}
-{% block content %}
-<div class="page-heading"><div><p class="eyebrow">BULK STUDENT ENTRY</p><h1>Import Students by CSV</h1><p class="muted">একসঙ্গে ১০০ বা তার বেশি শিক্ষার্থীর তথ্য যোগ করো</p></div><a href="{{ url_for('students') }}" class="btn secondary">← Student List</a></div>
-<section class="panel import-panel"><div class="import-icon">⇧</div><h2>CSV File Upload</h2><p class="muted">CSV-তে এই কলামগুলো থাকতে হবে: student_id, name, phone, monthly_fee। guardian ঐচ্ছিক। একই Student ID থাকলে তথ্য update হবে।</p><a class="text-link" href="{{ url_for('sample_csv') }}">Sample CSV Download ↓</a><form method="post" enctype="multipart/form-data" class="upload-form"><input type="file" name="file" accept=".csv,text/csv" required><button class="btn primary">Import CSV</button></form></section>
-{% endblock %}
